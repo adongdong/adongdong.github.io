@@ -1,0 +1,811 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+ <title>阿东-blog</title>
+ <link href="http://http://coolshell.info/atom.xml" rel="self"/>
+ <link href="http://http://coolshell.info"/>
+ <updated>2016-10-28T02:46:44+00:00</updated>
+ <author>
+   <name>Adong</name>
+   <email>1843568348@qq.com</email>
+ </author>
+
+ 
+ <entry>
+   <title>Git操作手册|命令速查表</title>
+   <link href="http://http://coolshell.info/blog/2016/02/git-guide.html"/>
+   <updated>2016-02-20T00:00:00+00:00</updated>
+   <id>/blog/2016/02/git-guide</id>
+   <content type="html">&lt;p&gt;这篇文章主要介绍Git分布式版本管理与集中式管理的一些差异，总结下Git常用命令作为日后的速查表，最后介绍Git进阶的一些案例。
+本文分为以下几个部分：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Git与SVN差异&lt;/li&gt;
+  &lt;li&gt;Git常用命令&lt;/li&gt;
+  &lt;li&gt;Git进阶指南&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;##Git与SVN差异&lt;/p&gt;
+
+&lt;p&gt;Git的第一个版本是Linux之父Linus Torvalds亲手操刀设计和实现的,Git 基于 DAG 结构 (Directed Acyclic Graph)，其运行起来相当的快,它已经是现在的主流。&lt;/p&gt;
+
+&lt;p&gt;Git 和 SVN 思想最大的差别有四个：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;去中心化&lt;/li&gt;
+  &lt;li&gt;直接记录快照，而非差异&lt;/li&gt;
+  &lt;li&gt;不一样的分支概念&lt;/li&gt;
+  &lt;li&gt;三个文件状态&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;去中心化&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Git是一个DVCS（分布式版本管理系统），在技术层面上并不存在一个像中心仓库这样的东西 ， 所有的数据都在本地，不存在谁是中心&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/images/git.gif&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;图中每个开发者拉取(pull)并推送(push)到origin。但除了这种集中式的推送拉取关系，每个开发者也可能会从其他的开发者处拉取代码的变更，从技术上讲，这意味着Alice定义了一个名为bob的Git的remote，它指向了Bob的软件仓库。反之亦然。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;直接记录快照，而非差异&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Git每一个版本都是直接记录快照，而非文件的差异。 下面两个对比图在网上是广为流传大家应该熟悉：&lt;/p&gt;
+
+&lt;p&gt;SVN：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/images/svn.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Git:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/images/gitgit.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Git使用SHA-1算法计算数据的校验和，通过文件的内容或目录计算出SHA-1哈希值，作为指纹字符串，每个Version 都是一个快照。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;不一样的分支概念&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Git的分支本质是一个指向提交快照的指针，是从某个提交快照往回看的历史。当创建/切换分支的时候，只是变换了指针指向而已.而SVN创建一个分支， 是的的确确的复制了一份文件。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;三个文件状态&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;在Git中文件有三种状态：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;已提交（committed）：该文件被安全地保存在了本地数据库&lt;/li&gt;
+  &lt;li&gt;已修改（modified）：修改了某个文件，但还没有保存&lt;/li&gt;
+  &lt;li&gt;已暂存（staged）：把已修改的文件放下下次保存的清单中&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;##Git常用命令&lt;/p&gt;
+
+&lt;p&gt;###创建&lt;/p&gt;
+
+&lt;p&gt;复制一个已创建的仓库:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone ssh://user@domain.com/repo.git
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;创建一个新的本地仓库:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git init
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;###本地修改&lt;/p&gt;
+
+&lt;p&gt;显示工作路径下已修改的文件：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git status
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;显示与上次提交版本文件的不同：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git diff
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;把当前所有修改添加到下次提交中：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git add
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;把对某个文件的修改添加到下次提交中：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git add -p &amp;lt;file&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;提交本地的所有修改：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git commit -a
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;提交之前已标记的变化：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git commit
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;附加消息提交：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git commit -m 'message here'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;提交，并将提交时间设置为之前的某个日期:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git commit --date=&quot;`date --date='n day ago'`&quot; -am &quot;Commit Message&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;###修改上次提交&lt;/p&gt;
+
+&lt;p&gt;请勿修改已发布的提交记录!&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git commit --amend
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;把当前分支中未提交的修改移动到其他分支&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git stash
+git checkout branch2
+git stash pop
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;###搜索&lt;/p&gt;
+
+&lt;p&gt;从当前目录的所有文件中查找文本内容：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git grep &quot;Hello&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;在某一版本中搜索文本：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git grep &quot;Hello&quot; v2.5
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;###提交历史&lt;/p&gt;
+
+&lt;p&gt;从最新提交开始，显示所有的提交记录（显示hash， 作者信息，提交的标题和时间）：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git log
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;显示所有提交（仅显示提交的hash和message）：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git log --oneline
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;显示某个用户的所有提交：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git log --author=&quot;username&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;显示某个文件的所有修改：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git log -p &amp;lt;file&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;谁，在什么时间，修改了文件的什么内容：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git blame &amp;lt;file&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;###分支与标签&lt;/p&gt;
+
+&lt;p&gt;列出所有的分支：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git branch
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;切换分支：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git checkout &amp;lt;branch&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;创建并切换到新分支:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git checkout -b &amp;lt;branch&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;基于当前分支创建新分支：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git branch &amp;lt;new-branch&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;基于远程分支创建新的可追溯的分支：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git branch --track &amp;lt;new-branch&amp;gt; &amp;lt;remote-branch&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;删除本地分支:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git branch -d &amp;lt;branch&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;给当前版本打标签：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git tag &amp;lt;tag-name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;###更新与发布&lt;/p&gt;
+
+&lt;p&gt;列出当前配置的远程端：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git remote -v
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;显示远程端的信息：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git remote show &amp;lt;remote&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;添加新的远程端：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git remote add &amp;lt;remote&amp;gt; &amp;lt;url&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;下载远程端版本，但不合并到HEAD中：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git fetch &amp;lt;remote&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;下载远程端版本，并自动与HEAD版本合并：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git remote pull &amp;lt;remote&amp;gt; &amp;lt;url&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;将远程端版本合并到本地版本中：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git pull origin master
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;将本地版本发布到远程端：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git push remote &amp;lt;remote&amp;gt; &amp;lt;branch&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;删除远程端分支：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git push &amp;lt;remote&amp;gt; :&amp;lt;branch&amp;gt; (since Git v1.5.0)
+或
+git push &amp;lt;remote&amp;gt; --delete &amp;lt;branch&amp;gt; (since Git v1.7.0)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;发布标签:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git push --tags
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;###合并与重置&lt;/p&gt;
+
+&lt;p&gt;将分支合并到当前HEAD中：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git merge &amp;lt;branch&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;将当前HEAD版本重置到分支中:
+请勿重置已发布的提交!&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git rebase &amp;lt;branch&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;退出重置:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git rebase --abort
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;解决冲突后继续重置：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git rebase --continue
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;使用配置好的merge tool 解决冲突：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git mergetool
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;在编辑器中手动解决冲突后，标记文件为已解决冲突&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git add &amp;lt;resolved-file&amp;gt;
+$ git rm &amp;lt;resolved-file&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;###撤销&lt;/p&gt;
+
+&lt;p&gt;放弃工作目录下的所有修改：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git reset --hard HEAD
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;移除缓存区的所有文件（i.e. 撤销上次git add）:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git reset HEAD
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;放弃某个文件的所有本地修改：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git checkout HEAD &amp;lt;file&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;重置一个提交（通过创建一个截然不同的新提交）&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git revert &amp;lt;commit&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;将HEAD重置到指定的版本，并抛弃该版本之后的所有修改：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git reset --hard &amp;lt;commit&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;将HEAD重置到上一次提交的版本，并将之后的修改标记为未添加到缓存区的修改：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git reset &amp;lt;commit&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;将HEAD重置到上一次提交的版本，并保留未提交的本地修改：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git reset --keep &amp;lt;commit&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;##Git进阶指南&lt;/p&gt;
+
+&lt;p&gt;###问：如何修改 origin 仓库信息？&lt;/p&gt;
+
+&lt;p&gt;####1、添加 origin 仓库信息&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git remote add origin &amp;lt;git仓库地址&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;####2、查看 origin 仓库信息&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# 以下三种方式均可
+git config get --remote.origin.url
+git remote -v
+git remote show origin
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;####3、删除 origin 仓库信息&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; git remote rm origin
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;###问：如何配置 git ssh keys ？&lt;/p&gt;
+
+&lt;p&gt;在本地生成 ssh 私钥 / 公钥 文件
+将「公钥」添加到 git 服务（github、gitlab、coding.net 等）网站后台
+测试 git ssh 连接是否成功
+接下来以添加 github ssh keys 为例，请注意替换 github 文件名。&lt;/p&gt;
+
+&lt;p&gt;注：如果对密钥机制不熟悉，建议不要指定 -f 参数，直接使用默认的 id_rsa 文件名。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# 运行以下命令，一直回车，文件名可随意指定
+ssh-keygen -t rsa -b 4096 -C &quot;kaiye@macbook&quot; -f ~/.ssh/github
+
+# 如果不是默认密钥 id_rsa ，则需要以下命令注册密钥文件，-K 参数将密钥存入 Mac Keychain
+ssh-add -K ~/.ssh/github
+
+# 将 pub 公钥的内容粘贴到线上网站的后台
+cat ~/.ssh/github.pub
+
+# 测试 git ssh 是否连接成功
+ssh -T git@github.com
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;###问：如何撤销修改？&lt;/p&gt;
+
+&lt;p&gt;修改包含四种情况，需单独区分。&lt;/p&gt;
+
+&lt;p&gt;####1、新建的文件和目录，且从未提交至版本库&lt;/p&gt;
+
+&lt;p&gt;此类文件的状态为 Untracked files ，撤销方法如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clean -fd .
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;其中，. 表示当前目录及所有子目录中的文件，也可以直接指定对应的文件路径，以下其他情况类似。&lt;/p&gt;
+
+&lt;p&gt;####2、提交过版本库，但未提交至暂存区的文件（未执行 git add）&lt;/p&gt;
+
+&lt;p&gt;此类文件的状态为&lt;code class=&quot;highlighter-rouge&quot;&gt; Changes not staged for commit&lt;/code&gt;，撤销方法：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; git checkout .
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;####3、已提交至暂存区的文件&lt;/p&gt;
+
+&lt;p&gt;此类文件的状态为 Changes to be committed，撤销方法：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git reset .
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;执行之后文件将会回到以上的 1 或者 2 状态，可继续按以上步骤执行撤销，若 git reset 同时加上 –hard 参数，将会把修改过的文件也还原成版本库中的版本。&lt;/p&gt;
+
+&lt;p&gt;####4、已提交至版本库（执行了 git commit）&lt;/p&gt;
+
+&lt;p&gt;每次提交都会生成一个 hash 版本号，通过以下命令可查阅版本号并将其回滚：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git log
+git reset &amp;lt;版本号&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;如果需要「回滚至上一次提交」，可直接使用以下命令：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git reset head~1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;执行之后，再按照 1 或者 2 状态进行处理即可，如果回滚之后的代码同时需要提交至 origin 仓库（即回滚 origin 线上仓库的代码），需要使用 -f 强制提交参数，且当前用户需要具备「强制提交的权限」。&lt;/p&gt;
+
+&lt;p&gt;####5、如果回滚了之后又不想回滚了怎么办？&lt;/p&gt;
+
+&lt;p&gt;如果是以上的情况 1 或者 2，只能歇屁了，因为修改没入过版本库，无法回滚。&lt;/p&gt;
+
+&lt;p&gt;如果是情况 4，回滚之后通过 git log 将看不到回滚之前的版本号，但可通过 git reflog 命令（所有使用过的版本号）找到回滚之前的版本号，然后 git reset &lt;版本号&gt; 。&lt;/版本号&gt;&lt;/p&gt;
+
+&lt;p&gt;###问：遇到冲突了怎么解决？&lt;/p&gt;
+
+&lt;p&gt;两个分支进行合并时（通常是 git pull 时），可能会遇到冲突，同时被修改的文件会进入 Unmerged 状态，需要解决冲突。&lt;/p&gt;
+
+&lt;p&gt;####1、最快的办法&lt;/p&gt;
+
+&lt;p&gt;大部分时候，「最快解决冲突」的办法是：使用当前 HEAD 的版本（ours），或使用合并进来的分支版本（theirs）。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# 使用当前分支 HEAD 版本，通常是冲突源文件的 &amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt; 标记部分，======= 的上方
+git checkout --ours &amp;lt;文件名&amp;gt;
+
+ # 使用合并分支版本，通常是源冲突文件的 &amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt; 标记部分
+ git checkout --theirs &amp;lt;文件名&amp;gt;
+
+# 标记为解决状态加入暂存区
+git add &amp;lt;文件名&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;####2、最通用的办法&lt;/p&gt;
+
+&lt;p&gt;用编辑器打开冲突的源文件进行修改，可能会发生遗留，且体验不好，通常需要借助 git mergetool 命令。&lt;/p&gt;
+
+&lt;p&gt;在 Mac 系统下，运行 git mergetool &lt;文件名&gt; 可以开启配置的第三方工具进行 merge，默认的是 FileMerge 应用程序，还可以配置成 Meld 或 kdiff3，体验更佳。&lt;/文件名&gt;&lt;/p&gt;
+
+&lt;p&gt;####3、最好的习惯&lt;/p&gt;
+
+&lt;p&gt;有三个好的习惯，可以减少代码的冲突：
+ 在开始修改代码前先 git pull 一下；
+  将业务代码进行划分，尽量不要多个人在同一时间段修改同一文件；
+  通过Gitflow 工作流也可以提升 git流程效率，减少发生冲突的可能性。&lt;/p&gt;
+
+&lt;p&gt;####4、最复杂的情况&lt;/p&gt;
+
+&lt;p&gt;如果你的项目周期比较长，还应该养成「定期 rebase 的习惯」，git pull –rebase 可以让分支的代码和 origin 仓库的代码保持兼容，同时还不会破坏线上代码的可靠性。&lt;/p&gt;
+
+&lt;p&gt;它的大概原理是，先将 origin 仓库的代码按 origin 的时间流在本地分支中提交，再将本地分支的修改记录追加到 origin 分支上。如果发生冲突，则可以即时的发现问题并解决，否则到项目上线时再解决冲突，可能会发生额外的风险。&lt;/p&gt;
+
+&lt;p&gt;rebase 大概的操作步骤如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# 将当前分支的版本追加到从远程 pull 回来的节点之后
+git pull --rebase
+
+# 若发生冲突，则按以上其他方法进行解决，解决后继续
+git rebase --continue
+
+# 直到所有冲突得以解决，待项目最后上线前再执行
+git push origin
+
+# 若多次提交修改了同一文件，可能需要直接跳过后续提交，按提示操作即可
+git rebase --skip
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;###问：如何在不提交修改的前提下，执行 pull / merge 等操作？&lt;/p&gt;
+
+&lt;p&gt;有些修改没有完全完成之前，可能不需要提交到版本库，圡方法是将修改的文件 copy 到 git 仓库之外的目录临时存放，pull / merge 操作完成之后，再 copy 回来。&lt;/p&gt;
+
+&lt;p&gt;这样的做法一个是效率不高，另外一个可能会遗漏潜在的冲突。此类需求最好是通过 git stash 命令来完成，它可以将当前工作状态（WIP，work in progress）临时存放在 stash 队列中，待操作完成后再从 stash 队列中重新应用这些修改。&lt;/p&gt;
+
+&lt;p&gt;以下是 git stash 常用命令：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# 查看 stash 队列中已暂存了多少 WIP
+git stash list
+
+# 恢复上一次的 WIP 状态，并从队列中移除
+git stash pop
+
+# 添加当前 WIP，注意：未提交到版本库的文件会自动忽略，只要不运行 git clean -fd . 就不会丢失
+git stash
+
+# 恢复指定编号的 WIP，同时从队列中移除
+git stash pop stash@{num}
+
+# 恢复指定编号的 WIP，但不从队列中移除
+git stash apply stash@{num}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;###问：如何在 git log 中查看修改的文件列表？&lt;/p&gt;
+
+&lt;p&gt;默认的 git log 会显示较全的信息，且不包含文件列表。使用 –name-status 可以看到修改的文件列表，使用 –oneline 可以将参数简化成一行。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git log --name-status --oneline
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;每次手动加上参数很麻烦，可以通过自定义快捷命令的方式来简化操作：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git config --global alias.ls 'log --name-status --oneline --graph'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;运行以上配置后，可通过 git ls 命令来实现「自定义 git log」效果，通过该方法也可以创建 git st 、 git ci 等一系列命令，以便沿用 svn 命令行习惯。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git config --global alias.st 'status --porcelain'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;更多 git log 参数，可通过 git help log 查看手册。&lt;/p&gt;
+
+&lt;p&gt;如果是看上一次提交的版本日志，直接运行 git show 即可。&lt;/p&gt;
+
+&lt;p&gt;此外，如果你的 Mac 安装了zsh（参考《全新Mac安装指南（编程篇），那么可以直接使用 gst、glog 等一系列快捷命令，详情见此列表：Plugin:git 。&lt;/p&gt;
+
+&lt;p&gt;###问：git submodule update 时出错怎么解决？&lt;/p&gt;
+
+&lt;p&gt;例如，在执行 git submodule update 时有以下错误信息：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;fatal: reference is not a tree: f869da471c5d8a185cd110bbe4842d6757b002f5
+Unable to checkout ‘f869da471c5d8a185cd110bbe4842d6757b002f5’ in submodule path ‘source/i18n-php-server’&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;在此例中，发生以上错误是因为 i18n-php-server 子仓库在某电脑 A 的「本地」commit 了新的版本 「f869da471c5d8a185cd110bbe4842d6757b002f5」，且该次 commit 未 push origin。但其父级仓库 i18n-www 中引用了该子仓库的版本号，且将引用记录 push origin，导致其他客户机无法 update 。&lt;/p&gt;
+
+&lt;p&gt;解决方法，在电脑 A 上将 i18n-php-server 版本库 push origin 后，在其他客户机上执行 git submodule update 。或者用以上提到的 git reset 方法，将子仓库的引用版本号还原成 origin 上存在的最新版本号。&lt;/p&gt;
+
+&lt;p&gt;###其他问题&lt;/p&gt;
+
+&lt;p&gt;设置本地分支与远程分支保持同步，在第一次 git push 的时候带上 -u 参数即可&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git push origin master -u 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;支持中文目录与文件名的显示（git 默认将非 ASCII 编码的目录与文件名以八进制编码展示）&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git config core.quotepath off
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;常用的打 tag 操作，更多请查看《Git 基础 - 打标签》&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# 列出所有本地 tag
+git tag   
+
+# 本地新增一个 tag，推送至 origin 服务器
+git tag -a v1.0.0 -m 'tag description'
+git push origin v1.0.0
+
+# 删除本地与 origin tag
+git tag -d v1.0.0
+git push origin --delete v1.0.0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;使用 git GUI 客户端（如，SoureTree、Github Desktop）能极大的提升分支管理效率。分支合并操作通常只有两种情况：从 origin merge 到本地，使用 git pull 即可；从另外一个本地分支 merge 到当前分支，使用 git merge &lt;分支名&gt;，以下是常用命令：&lt;/分支名&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# 新建分支 branch1，并切换过去
+git checkout -b branch1
+
+# 查看所有本地与远程分支
+git branch -a
+
+# 修改完成后，切换回 master 分支，将 branch1 分支合并进来
+git checkout master
+git merge branch1
+
+# 删除已完成合并的分支 branch1
+git branch -d branch1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;###参考资料&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Pro Git 简体中文版&lt;/li&gt;
+  &lt;li&gt;Git权威指南&lt;/li&gt;
+  &lt;li&gt;命令行man手册&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>使用jekyll在Github上搭建博客</title>
+   <link href="http://http://coolshell.info/blog/2014/07/use-jekyll-build-blog-on-github.html"/>
+   <updated>2014-07-15T00:00:00+00:00</updated>
+   <id>/blog/2014/07/use-jekyll-build-blog-on-github</id>
+   <content type="html">&lt;p&gt;jekyll是一个使用Ruby编写的静态站点生成工具，使用Liquid模板渲染引擎，支持Markdown和Textile标记语言，并且可以为所有以 .html、.markdown、.textile扩展名结尾的文件使用YAML配置，内置语法高亮功能。&lt;/p&gt;
+
+&lt;p&gt;而Github的Pages服务可以为每个Github主机上的仓库提供静态页面服务，并且Pages服务支持jekyll。因为Github Pages有两种Pages，分别是用户页面和项目页面，所以我们可以使用用户页面来创建自己的Blog。&lt;/p&gt;
+
+&lt;p&gt;在开始前，请确保你已经有了Github账号一枚和Git的正确配置。没有的朋友可以先移步Github注册并安装配置Git。&lt;/p&gt;
+
+&lt;p&gt;首先，创建你的 Blog 仓库 &lt;code class=&quot;highlighter-rouge&quot;&gt;username.github.com&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ mkdir username.github.com
+$ cd username.github.com
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;新建一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;index.html&lt;/code&gt; 文件，像下面这样:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!doctype html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Hello&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;Hello!&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;初始化仓库、提交并push到Github:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git init
+$ git add .
+$ git commit -a -m 'init commit.'
+$ git remote add origin
+$ git push origin master
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;现在你打开 &lt;code class=&quot;highlighter-rouge&quot;&gt;username.github.com&lt;/code&gt; 就可以看到刚才新建的页面了，就是这么简单。当然也可以为你的Blog仓库绑定独立域名，具体做法就是：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;在你的仓库中新建内容为 www.youdomain.com 的 CNAME 文件；&lt;/li&gt;
+  &lt;li&gt;在你的域名管理页或者是DNS解析的地方，增加一个记录，记录类别为CNAME(Alias)类型.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;Note：&lt;/strong&gt; 如果你在CNAME中填写的是顶级域名，就得设置DNS的记录类别为A(Host)型，并设置主机为 &lt;code class=&quot;highlighter-rouge&quot;&gt;207.97.227.245&lt;/code&gt;。详细介绍请移步Github的Pages页面。&lt;/p&gt;
+
+&lt;p&gt;接下来我们只需要按照自己的喜好设计页面。首先认识下jekyll的文件及目录配置:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  .
+  |-- _includes
+  |-- _plugins 
+  |-- _layout 
+  |   |-- default.html
+  |   `-- post.html
+  |-- _post
+  |   |-- yyyy-mm-dd-title.markdown
+  |   `-- yyyy-mm-dd-title.markdown
+  |-- _site
+  |-- _config.yml
+  `-- index.html
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;_includes&lt;/strong&gt;存放你需要在模板文件中包含的文件，你可以使用Liquid标签 &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;‰&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;file.ext&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;‰&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;/code&gt;来引用相应的文件。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;_plugins&lt;/strong&gt;可以增加你自己的插件&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;_layout&lt;/strong&gt;存放布局模板，请参考&lt;a href=&quot;https://github.com/taberhuang/taberhuang.github.com/tree/master/_layouts&quot;&gt;https://github.com/taberhuang/taberhuang.github.com/tree/master/_layouts&lt;/a&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;_post&lt;/strong&gt;存放文章列表，文件命名一定要遵循 yyyy-mm-dd-title.html&lt;/td&gt;
+      &lt;td&gt;markdown&lt;/td&gt;
+      &lt;td&gt;textile 规则，请参考&lt;a href=&quot;https://github.com/taberhuang/taberhuang.github.com/tree/master/_posts&quot;&gt;https://github.com/taberhuang/taberhuang.github.com/tree/master/_posts&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;strong&gt;_sitejekyll&lt;/strong&gt;自动生成的，所以可以忽略，如果你有在本地安装jekyll并预览了的话，可以使用.gitignore设置Git停止对本目录的跟踪。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;_config.yml&lt;/strong&gt;设置经常使用的配置选项，这样在本地启动预览时就不用每次都手动输入了。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;index.html 和所有的 HTML/Markdown/Textile 文件&lt;/strong&gt; 所有的HTML/Markdown/Textile文件都可以包含 YAML 配置，这类文件都会被jekyll解析。&lt;/p&gt;
+
+&lt;p&gt;现在你可以在自己的仓库中配置好你自己的目录及文件，也可以&lt;code class=&quot;highlighter-rouge&quot;&gt;clone&lt;/code&gt;我的仓库，然后修改。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone https://github.com/taberhuang/taberhuang.github.com.git
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;修改完后就可以&lt;code class=&quot;highlighter-rouge&quot;&gt;push&lt;/code&gt;你的代码到Github上，看到结果了。刚才有说到本地预览，如果你想在本地预览后，确保没错误再&lt;code class=&quot;highlighter-rouge&quot;&gt;push&lt;/code&gt;的话，就需要在本地安装jekyll，下面介绍下jekyll的安装方法。&lt;/p&gt;
+
+&lt;p&gt;一、安装Ruby运行环境和RubyGem:Windows用户只要下载 RubyInstaller。下载安装后请手动升级gem.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ gem update --system
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;二、安装DevKit。DevKit是windows平台编译和使用本地C/C++扩展包工具。用来模拟Linux平台下的 make,gcc,sh 进行编译。下载文件后，解压到 `C:\DevKit’，再通过命令行安装:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd C:\DevKit
+$ ruby dk.rb init
+$ ruby dk.rb install
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;三、安装并检查刚才的DevKit安装是否成功。如果成功安装，则DevKit也就安装成功，如果不成功，请重新安装DevKit。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ gem install jekyll
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;四、安装Rdiscount，这个是用来解析Markdown标记的解析包。如果你使用Textile的话，就是安装Kramdown。&lt;/p&gt;
+
+&lt;p&gt;$ gem install rdiscount&lt;/p&gt;
+
+&lt;p&gt;所有的环境和依赖包都安装成功后，进入你的仓库目录，用下面的命令便可启动jekyll，并在本地预览了，预览地址默认为 &lt;code class=&quot;highlighter-rouge&quot;&gt;127.0.0.1:4000&lt;/code&gt;，当然你也可以通过 _config.yml 配置:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jekyll --server
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;是不是很爽?&lt;/p&gt;
+
+&lt;p&gt;参考及相关资料：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://pages.github.com/&quot;&gt;http://pages.github.com/&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/mojombo/jekyll/wiki&quot;&gt;https://github.com/mojombo/jekyll/wiki&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://blog.envylabs.com/2009/08/publishing-a-blog-with-github-pages-and-jekyll/&quot;&gt;http://blog.envylabs.com/2009/08/publishing-a-blog-with-github-pages-and-jekyll/&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://daringfireball.net/projects/markdown/syntax&quot;&gt;http://daringfireball.net/projects/markdown/syntax&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+ </entry>
+ 
+ 
+</feed>
