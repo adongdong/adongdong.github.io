@@ -6,9 +6,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="首页：Home - 阿东-blog - Adong(1843568348@qq.com)">
+    <meta name="description" content="Javascript - 阿东-blog - Adong(1843568348@qq.com)">
     <title>
-      首页：Home - 阿东-blog
+      Javascript - 阿东-blog
     </title>
     <!-- Bootstrap Core CSS -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -106,32 +106,427 @@
       <div class="row">
         <!-- Blog Entries Column -->
         <div class="col-md-8">
-          <!-- 
-<h1 class="page-header">
-  <small>
-    Draw my life with code
-  </small>
-</h1>
--->
-<!-- Loop output paged posts -->
-<div id="index" class="row">
-    <div class="post-area">
-     	 <div class="post-list-body">
-        <div post-cate="All">
-        <ul class="posts">
-	
-	</ul>
-	<!-- Pager indicator -->
-	<ul class="pager">
+          <!-- Blog Post -->
+<!-- Title -->
+<div class="row">
+  <div class="post-area post">
+
+ 	<div class="post-list-body">
+        	<div class="all-posts" post-cate="All">
+ 		<header>
+		<h1>
+		  Javascript
+		  <div class="post-date"><a href="https://github.com/LippiOuYang/LippiOuYang.github.io/edit/master/_posts/2014-08-20-javascript.md" target="_blank">纠错</a>&nbsp;&nbsp;
+			<span class="glyphicon glyphicon-time"></span>
+			20 Aug 2014
+		  </div>
+		</h1>
+ 		</header>
+		<!-- Author -->
+		<hr>
+		 <article>
+		<h2 id="javascript">Javascript的基本语法</h2>
+
+<p>一、简介</p>
+
+<p>1、什么是javascript</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>JavaScript 是网景（Netscape）公司开发的一种基于客户端浏览器、面向（基于）对象、事件驱动式的网页脚本语言。 客户端浏览器：
+</code></pre>
+</div>
+
+<p>HTML、CSS、JavaScript客户端语言</p>
+
+<p>PHP/Java/.NET服务器语言</p>
+
+<p>判断一种语言是客户端还是服务器端，主要看“它”在哪里运行</p>
+
+<p>JavaScript是一种面向对象的脚本语言</p>
+
+<p>事件驱动式</p>
+
+<p>2、javascript的用途</p>
+
+<p>1）网页特效</p>
+
+<p>2）表单验证</p>
+
+<p>3）网页小游戏（超级玛丽、五子棋、坦克大战）</p>
+
+<p>4）服务器端编程（Ajax、Node.js）</p>
+
+<p>3、快速入门</p>
+
+<p>二、javascript的基本语法</p>
+
+<p>1、基本格式</p>
+
+<p>1）JavaScript区分大小写</p>
+
+<p>2）JavaScript脚本程序须嵌入在HTML文件中</p>
+
+<p>3）JavaScript脚本程序中不能包含HTML标记代码</p>
+
+<p>如果想在javascript中使用html代码，可以采用document.write(“&lt;h1&gt;hello world&lt;/h1&gt;”);</p>
+
+<p>4）每行写一条脚本语句</p>
+
+<p>document.write(‘hello’);alert(‘world’);</p>
+
+<p>5）语句末尾可以加分号（建议都加分号）</p>
+
+<p>document.write(‘hello world’)</p>
+
+<p>alert(‘hello javascript’);</p>
+
+<p>6）JavaScript脚本程序可以独立保存为一个外部文件
+public.js文件中，并通过script中的src属性直接引入</p>
+
+<p>2、变量</p>
+
+<p>变量是用来临时存储数值的容器，变量存储的数值是可以变化的</p>
+
+<p>变量必须要先声明才能使用，使用var声明变量</p>
+
+<p>错误的：
+alert(i);
+正确的：
+var i=10;
+alert(i);
+正确的：（只限全局，不推荐使用）
+i=10;
+alert(i)</p>
+
+<p>变量的命名规则：第一个字符必须是英文字母，或者是下划线(_)，还可以是$美元符号，其后的字符，可以是英文字母，数字，下划线；变量名不能是JavaScript的保留字
+变量的作用域:全局变量、局部变量</p>
+
+<p>3、变量的数据类型：</p>
+
+<p>1）String 字符类型</p>
+
+<p>2）Number 整型、浮点型</p>
+
+<p>3）、boolean  true、false</p>
+
+<p>4）Undefined（变量声明，但未赋值）</p>
+
+<p>5）Null 空类型</p>
+
+<p>6）Object 对象类型（数组）</p>
+
+<p>4、parseInt、parseFloat、isNaN函数</p>
+
+<p>parseInt()：将字符串转化为整数</p>
+
+<p>parseFloat()：将字符串转化为浮点数</p>
+
+<p>isNaN()：判断给定的值是否不为数值，如果不是数值则返回true，是数值返返回false</p>
+
+<p>5、运算符</p>
+
+<p>1）算术运算符</p>
+
+<p>”+”  “-“  “*”  “/”  “%”</p>
+
+<p>++ ：自加</p>
+
+<p>–  ：自减</p>
+
+<p>2）比较运算符</p>
+
+<blockquote>
+  <p>&lt; == === &gt;= &lt;= != !==</p>
+</blockquote>
+
+<p>==：值相等，类型可以不同</p>
+
+<p>===：全等于，要求值相等且类型要一致</p>
+
+<p>3）逻辑运算符</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>&amp;&amp;</td>
+      <td> </td>
+      <td>!</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>4）赋值运算符</p>
+
+<p>= += -= *= /= %=</p>
+
+<p>5）字符串运算符</p>
+
+<p>+
+三、通过id找对象</p>
+
+<p>基本语法：document.getElementById(id值)</p>
+
+<p>获取单标签的值：</p>
+
+<p>获取双标签的值：</p>
+
+<h2 id="javascript-1">Javascript的语言结构</h2>
+<p>一、流程过程</p>
+
+<p>1）顺序结构</p>
+
+<p>2）分支结构</p>
+
+<p>if else if else</p>
+
+<p>switch</p>
+
+<p>说明：</p>
+
+<p>在if结构中，既可以对固定值的判断也可以实现对范围的判断</p>
+
+<p>在switch，只能实现对固定值的判断</p>
+
+<p>3）循环结构</p>
+
+<p>for循环</p>
+
+<p>while循环</p>
+
+<p>do…while…循环</p>
+
+<p>for…in…循环</p>
+
+<p>4)循环控制</p>
+
+<p>break continue</p>
+
+<p>二、JavaScript中的函数</p>
+
+<p>1、函数分类</p>
+
+<p>1）系统函数</p>
+
+<p>2）自定义函数</p>
+
+<p>2、自定义函数</p>
+
+<p>使用函数前要先定义才能调用</p>
+
+<p>	函数定义有三个部分:函数名,参数列表,函数体</p>
+
+<p>	定义函数的格式</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>function 函数名([参数1,参数2...]){
+
+	函数执行部分;
+
+	return 表达式;
+
+}
+</code></pre>
+</div>
+
+<p>3、函数的功能：</p>
+
+<p>1）代码重用</p>
+
+<p>2）模块化编程</p>
+
+<p>4、快速入门</p>
+
+<p>5、函数参数</p>
+
+<p>实参：在函数调用时，所传递的参数，我们称之为实参</p>
+
+<p>形参：函数定义时，所指定的参数，我们称之为形参</p>
+
+<p>6、自调用匿名函数</p>
+
+<p>我们把没有名字的函数就称之为匿名函数</p>
+
+<p>说明：即使是匿名函数，只要其进行了定义，那么系统就会自动返回其函数的首地址</p>
+
+<p>自调用匿名函数作用：</p>
+
+<p>在以后项目开发中，经常会引入各种各样的js代码库，如jQuery、Extjs、Dojo，可能在使用过程，就会产生函数冲突，为了解决函数冲突问题，我们通常采用自调用匿名函数解决此问题。</p>
+
+<h2 id="javascript-2">Javascript的事件</h2>
+
+<p>一、事件编程</p>
+
+<p>1、什么是事件驱动式？</p>
+
+<p>答：在JavaScript中，用户的行为（点击、移动）会被Javascript中的事件所捕获，并执行相应的处理程序，我们把这个过程就称之事件驱动式。</p>
+
+<p>2、JavaScript中常用的事件</p>
+
+<p>	onload   		： 	 页面加载完毕时触发</p>
+
+<p>	onunload		： 	 页面卸载时触发(关闭)</p>
+
+<p>	onblur		：	 失去焦点时触发</p>
+
+<p>	onfocus		：   获得焦点时触发</p>
+
+<p>	onclick		：   单击时触发</p>
+
+<p>	onmouseover  ：   鼠标悬浮时触发</p>
+
+<p>	onmouseout   ：   鼠标离开时触发</p>
+
+<p>	onmousedown ：	  鼠标按下时触发</p>
+
+<p>	onmouseup	： 鼠标弹起时（释放）时触发</p>
+
+<p>	onmousemove ： 鼠标移动时触发</p>
+
+<p>	onchange		： 状态改变时触发</p>
+
+<p>	onselect	    ： 文本框文本被选择时触发（input、textarea）</p>
+
+<p>	onkeypress	    ： 键盘按下时触发（无法捕获功能键）</p>
+
+<p>	onkeydown    ： 键盘按下时触发（可以捕获功能键）</p>
+
+<p>	onkeyup 		： 键盘弹起时触发</p>
+
+<p>	onsubmit		： 表单提交时触发</p>
+
+<p>只有返回值为真时才能提交  否则不能提交</p>
+
+<p>	onseset		： 表单重置时触发</p>
+
+<p>3、事件绑定的方式分为三种:</p>
+
+<p>行内绑定</p>
+
+<p>动态绑定</p>
+
+<p>引入</p>
+
+<p>4、获取对象的第二种方法</p>
+
+<p>document.getElementsByName(name值);  获得的对象是多个对象</p>
+
+<p>5、获取的长度</p>
+
+<p>object.length</p>
+
+<h2 id="javascript-3">Javascript的内置对象(二)</h2>
+<p>一、数组对象</p>
+
+<p>1、什么是数组？</p>
+
+<p>答：一组数据的集合</p>
+
+<p>一维数组</p>
+
+<p>二维数组</p>
+
+<p>多维数组</p>
+
+<p>在javascript中数组只有索引数组之分</p>
+
+<p>2、数组的定义</p>
+
+<p>	var arr=[值1,值2,值3];  		//隐式创建</p>
+
+<p>	var arr=new Array(值1,值2,值3); //显示创建或直接实例化</p>
+
+<p>	var array=new Array(size);       //显示创建并指定数组长度</p>
+
+<p>3、数组的访问</p>
+
+<p>4、定义文本下标数组</p>
+
+<p>5、数组的分类</p>
+
+<p>二、数组的遍历</p>
+
+<p>1、通过for循环进行遍历输出</p>
+
+<p>数组拥有一个属性length，标识数组长度</p>
+
+<p>2、通过for…in…进行遍历输出</p>
+
+<p>三、数组的常用系统函数</p>
+
+<p>pop()：该方法用于删除并返回数组元素中最后一个元素</p>
+
+<p>shift()：该方法用于删除并返回数组的第一个元素</p>
+
+<p>push()：该方法向数组末尾添加一个或多个元素，并返回添加后的数组长度</p>
+
+<p>unshift()：该方法是向数组开头添加一个或者多个元素，并返回添加后的数组长度</p>
+
+<p>reverse()：该方法用于颠倒数组元素的顺序</p>
+
+<p>sort()：该方法用于将数组进行排序</p>
+
+<p>四、时间日期对象 date 类</p>
+
+<p>1、Date对象的创建方式</p>
+
+<p>方式一：var date=new Date()  //创建一个当前时间</p>
+
+<p>方式二：var date=new Date(2014,8,10)  //指定年月日创建时间 写8实际上
+  是9月份系统默认多一个月</p>
+
+<p>方式三：var date=new Date(“Jan 2,2008 10:21:22”)  //根据字符串创建对象</p>
+
+<p>2、常用的时间类函数</p>
+
+<p>date()：返回系统当前的日期和时间</p>
+
+<p>getDate()：从日期对象中返回一个月中的某一天</p>
+
+<p>getDay()：从日期对象中返回一周中的某一天</p>
+
+<p>getMonth()：从日期对象中返回月份</p>
+
+<p>getYear()：从日期对象中返回年份</p>
+
+<p>getHours()：从日期对象中返回小时</p>
+
+<p>getMinutes()：从日期对象中返回分钟</p>
+
+<p>getSeconds()：从日期对象中返回秒数</p>
+
+<p>getTime()：返回从1970年1月1日至今的毫秒数</p>
+
+<p>toLocaleString()：根据本地时间格式，把日期对象转换为字符串</p>
+
+
+		  </article>
+		<hr>
+	<br/>
+        <p>
+          本作品由 <a href="mailto:1843568348@qq.com">Adong</a> 创作，采用
+          <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="查看协议详细信息" target="_blank">CC BY-NC-SA 3.0 许可协议</a>
+          进行许可。
+        </p>
+	<div style="margin-top:10px;margin-bottom:10px">
+	  
+	  <span class="next">
+	    上篇：
+	    <a href="/blog/2014/07/use-jekyll-build-blog-on-github.html">
+	      使用jekyll在Github上搭建博客
+	    </a>
+	  </span>
 	   
-	</ul>
+	  
+	  <span class="prev">
+	    下篇：
+	    <a href="/blog/2015/08/mysqli-database.html">
+	      Mysqli数据库操作
+	    </a>
+	  </span>
+	  
+	</div>
 	</div>
 	
-
-	 
-       
+        
 	<div post-cate="jekyll">
-
           <ul class="posts">
             
               
@@ -153,7 +548,6 @@
 	</div>
         
 	<div post-cate="reprints">
-
           <ul class="posts">
             
               
@@ -175,7 +569,6 @@
 	</div>
         
 	<div post-cate="javascript">
-
           <ul class="posts">
             
               
@@ -197,7 +590,6 @@
 	</div>
         
 	<div post-cate="Mysql">
-
           <ul class="posts">
             
               
@@ -219,7 +611,6 @@
 	</div>
         
 	<div post-cate="pdo">
-
           <ul class="posts">
             
               
@@ -241,7 +632,6 @@
 	</div>
         
 	<div post-cate="正则">
-
           <ul class="posts">
             
               
@@ -263,7 +653,6 @@
 	</div>
         
 	<div post-cate="Git">
-
           <ul class="posts">
             
               
@@ -284,10 +673,40 @@
           </ul>
 	</div>
         
-	
 	 </div>
 
 </div>
+
+
+<!-- Blog Comments -->
+<div class="media">
+  <!-- UY BEGIN 
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2023801"></script>
+UY END -->
+
+<!-- 多说评论框 start -->
+  <div class="post-comment">
+            <span>Comments</span>
+	<div class="ds-thread" data-thread-key="/blog/2014/08/javascript" data-title="Javascript" data-url="LippiOuYang.github.io/blog/2014/08/javascript.html">
+	</div>
+ </div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"lippiouyang"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+ 
+</div> 
 </div>
 
         </div>
