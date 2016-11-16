@@ -18,7 +18,7 @@ tag: [tp框架]
                      );
                 //成功则返回ID，失败则返回false,会过滤字段
                 //echo $user->add($data);
-                //直接用add也可以但是不会过滤字段      
+                //直接用add也可以但是不会过滤字段
                 echo $user->data($data)->add();
                 echo $user->getLastSql();
             }
