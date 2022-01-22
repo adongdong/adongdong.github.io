@@ -1,79 +1,92 @@
----
-layout: default
-title: "首页：Home"
----
-<!-- 
-<h1 class="page-header">
-  <small>
-    {{ site.description }}
-  </small>
-</h1>
--->
-<!-- Loop output paged posts -->
-<div id="index" class="row">
-    <div class="post-area">
-     	 <div class="post-list-body">
-        <div post-cate="All">
-        <ul class="posts">
-	{% for post in paginator.posts %}
-	<li>	
-	<h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
-	<span class="date">{{ post.date | date_to_string }}</span>
-	
-	<hr>
-	<p>{% if post.excerpt.size > 32 %}{{ post.excerpt }}{% else %}{{ post.content | strip_html | strip_newlines | truncate: 160 }}{% endif %}</p>
-		<p> <a href="{{ post.url }}"><span >阅读全文 &raquo; </span></a></p>
-	<hr>
-	</li>
-	{% endfor %}
-	</ul>
-	<!-- Pager indicator -->
-	<ul class="pager">
-	  {% if paginator.previous_page %} {% if paginator.previous_page == 1 %}
-	  <li class="previous">
-	    <a href="{{ site.url }}/">
-	      &larr; Older
-	    </a>
-	  </li>
-	  {% else %}
-	  <li class="previous">
-	    <a href="{{ site.url }}/page{{ paginator.previous_page }}">
-	      &larr; Older
-	    </a>
-	  </li>
-	  {% endif %} {% endif %} {% if paginator.next_page %}
-	  <li class="next">
-	    <a href="{{ site.url }}/page{{ paginator.next_page }}">
-	      Newer &rarr;
-	    </a>
-	  </li>
-	  {% endif %}
-	</ul>
-	</div>
-	
+<!DOCTYPE html>
+<html>
 
-	 
-       {% for category in site.categories %}
-	<div post-cate="{{category | first}}">
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <title>阿东爱芳芳</title>
+    <link rel='stylesheet' href='css/55c16d94000109f300000000.css' />
+    <link rel='stylesheet' href='css/55c16dab0001286100000000.css' />
+    <link rel='stylesheet' href='css/55c16dc00001fa1a00000000.css' />
+    <link rel='stylesheet' href='css/55c16dda0001113100000000.css' />
+    <script type="text/javascript" src="js/55ac9a860001a6c500000000.js"></script>
+    <script type="text/javascript" src="js/55ac9ea30001ace700000000.js"></script>
+    <script type="text/javascript" src="js/55c16c910001e21b00000000.js"></script>
 
-          <ul class="posts">
-            {% for posts in category  %}
-              {% for post in posts %}
-                {% if post.url %}
-		<li>
-                  <a href="{{ post.url }}" class="post-list-item">
-                    <h2>{{ post.title }}</h2>
-                    <span class="date">{{ post.date | date: "%b %-d, %Y" }}</span>
-                  </a>
-		</li>
-                {% endif %}
-              {% endfor %}
-            {% endfor %}
-          </ul>
-	</div>
-        {% endfor %}
-	
-	 </div>
 
+</head>
+
+<body>
+<div id='content'>
+    <ul class='content-wrap'>
+        <!-- 第一副画面 -->
+        <li>
+            <!-- 背景图 -->
+            <div class="a_background">
+                <div class="a_background_top"></div>
+                <div class="a_background_middle"></div>
+                <div class="a_background_botton"></div>
+            </div>
+            <!-- 云 -->
+            <div class="cloudArea">
+                <div class="cloud cloud1"></div>
+                <div class="cloud cloud2"></div>
+            </div>
+            <!-- 太阳 -->
+            <div id="sun"></div>
+        </li>
+        <!-- 第二副画面 -->
+        <li>
+            <!-- 背景图 -->
+            <div class="b_background"></div>
+            <div class="b_background_preload"></div>
+            <!-- 商店 -->
+            <div class="shop">
+                <div class="door">
+                    <div class="door-left"></div>
+                    <div class="door-right"></div>
+                </div>
+                <!-- 灯 -->
+                <div class="lamp"></div>
+            </div>
+            <!-- 鸟 -->
+            <div class="bird"></div>
+        </li>
+        <!-- 第三副画面 -->
+        <li>
+            <!-- 背景图 -->
+            <div class="c_background">
+                <div class="c_background_top"></div>
+                <div class="c_background_middle"></div>
+                <div class="c_background_botton"></div>
+            </div>
+            <!-- 小女孩 -->
+            <div class="girl"></div>
+            <div class="bridge-bottom">
+                <div class="water">
+                    <div id="water1" class="water_1"></div>
+                    <div id="water2" class="water_2"></div>
+                    <div id="water3" class="water_3"></div>
+                    <div id="water4" class="water_4"></div>
+                </div>
+            </div>
+            <!-- 星星 -->
+            <ul class="stars">
+                <li class="stars1"></li>
+                <li class="stars2"></li>
+                <li class="stars3"></li>
+                <li class="stars4"></li>
+                <li class="stars5"></li>
+                <li class="stars6"></li>
+            </ul>
+            <!-- logo图 -->
+            <div class="logo">张芳，爱你哟</div>
+        </li>
+    </ul>
+    <!-- 雪花 -->
+    <div id="snowflake"></div>
+    <!-- 小男孩 -->
+    <div id="boy" class="charector"></div>
 </div>
-</div>
+</body>
+
+</html>
